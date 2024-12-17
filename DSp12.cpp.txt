@@ -1,0 +1,177 @@
+#include <iostream>
+using namespace std;
+#define MAX_SIZE 10
+int arr[MAX_SIZE];
+int front, rear;
+
+class Deque
+{
+public:
+    Deque()
+    {
+        front = -1;
+        rear = -1;
+    }
+
+    void insertFront(int value)
+    {
+        if ((front == 0 && rear == MAX_SIZE - 1) || front == rear + 1)
+        {
+            cout << "Deque is full. Cannot insert at the front." << endl;
+        }
+
+        if (front == -1)
+        {
+            front = rear = 0;
+        }
+        else if (front == 0)
+        {
+            front = MAX_SIZE - 1;
+        }
+        else
+        {
+            front--;
+        }
+
+        arr[front] = value;
+        cout << "Inserted " << value << " at the front." << endl;
+    }
+
+    void insertRear(int value)
+    {
+        if ((front == 0 && rear == MAX_SIZE - 1) || front == rear + 1)
+        {
+            cout << "Deque is full. Cannot insert at the rear." << endl;
+            return;
+        }
+
+        if (front == -1)
+        {
+            front = rear = 0;
+        }
+        else if (rear == MAX_SIZE - 1)
+        {
+            rear = 0;
+        }
+        else
+        {
+            rear++;
+        }
+
+        arr[rear] = value;
+        cout << "Inserted " << value << " at the rear." << endl;
+    }
+
+    void deleteFront()
+    {
+        if (front == -1)
+        {
+            cout << "Deque is empty. Cannot delete from the front." << endl;
+            return;
+        }
+
+        cout << "Deleted " << arr[front] << " from the front." << endl;
+
+        if (front == rear)
+        {
+            front = rear = -1;
+        }
+        else if (front == MAX_SIZE - 1)
+        {
+            front = 0;
+        }
+        else
+        {
+            front++;
+        }
+    }
+
+    void deleteRear()
+    {
+        if (front == -1)
+        {
+            cout << "Deque is empty. Cannot delete from the rear." << endl;
+            return;
+        }
+
+        cout << "Deleted " << arr[rear] << " from the rear." << endl;
+
+        if (front == rear)
+        {
+            front = rear = -1;
+        }
+        else if (rear == 0)
+        {
+            rear = MAX_SIZE - 1;
+        }
+        else
+        {
+            rear--;
+        }
+    }
+
+    void display()
+    {
+        if (front == -1)
+        {
+            cout << "Deque is empty." << endl;
+            return;
+        }
+
+        cout << "Deque elements: ";
+        int i = front;
+        do
+        {
+            cout << arr[i] << " ";
+            i = (i + 1) % MAX_SIZE;
+        } while (i != (rear + 1) % MAX_SIZE);
+        cout << endl;
+    }
+};
+
+int main()
+{
+    int c, i;
+
+    Deque d;
+    do
+    {
+        // perform switch opeartion {
+        cout << "\n 1.insert at beginning";
+        cout << "\n 2.insert at end";
+        cout << "\n 3.show";
+        cout << "\n 4.deletion from front";
+        cout << "\n 5.deletion from rear";
+        cout << "\n 6.exit";
+        cout << "\n enter your choice:";
+        cin >> c;
+        switch (c)
+        {
+        case 1:
+            cout << "enter the element to be inserted";
+            cin >> i;
+            d.insertFront(i);
+            break;
+        case 2:
+            cout << "enter the element to be inserted";
+            cin >> i;
+            d.insertRear(i);
+            break;
+        case 3:
+            d.display();
+            break;
+        case 4:
+            d.deleteFront();
+            break;
+        case 5:
+            d.deleteRear();
+            break;
+        case 6:
+            exit(1);
+            break;
+        default:
+            cout << "invalid choice";
+            break;
+        }
+    } while (c != 7);
+}
